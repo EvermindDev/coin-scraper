@@ -1,5 +1,6 @@
 from selenium.webdriver.common.by import By
 import re
+from src.helpers.logger import Logger
 
 
 class Coin:
@@ -20,7 +21,10 @@ class Coin:
                 if len(list_of_urls) >= limit:
                     break
             return list_of_urls
-        except Exception as ex:
+        except Exception as e:
+            log = Logger()
+            log.error(
+                "Error in element_list method : {}".format(e))
             return []
 
     @staticmethod
@@ -34,5 +38,8 @@ class Coin:
                 "symbol": symbol.text
             }
 
-        except Exception as ex:
-            return []
+        except Exception as e:
+            log = Logger()
+            log.error(
+                "Error in coin_data method : {}".format(e))
+            return {}

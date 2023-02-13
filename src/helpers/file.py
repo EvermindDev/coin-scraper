@@ -1,10 +1,13 @@
 import os
 import csv
+from src.helpers.logger import Logger
 
 
 class File:
+
     @staticmethod
     def write_csv(filename, data, directory):
+        log = Logger()
         os.chdir(directory)
         fieldnames = ['name', 'symbol']
         mode = 'w'
@@ -21,3 +24,4 @@ class File:
                 }
                 writer.writerow(row)
             data_file.close()
+        log.info('Data successfully saved in file {}.csv'.format(filename))

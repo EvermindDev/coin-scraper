@@ -2,6 +2,8 @@ from src.helpers.driver_initializer import DriverInitializer
 from src.helpers.coins import Coin
 from src.helpers.file import File
 import os
+from src.helpers.logger import Logger
+
 
 class CoinMarketCap:
 
@@ -27,8 +29,10 @@ class CoinMarketCap:
                 for index, url in enumerate(elements, start=1):
                     self.__driver.get(url)
                     self.coins[index] = Coin.coin_data(self.__driver)
-        except Exception as ex:
-            pass
+        except Exception as e:
+            log = Logger()
+            log.error(
+                "Error in __fetch_data method : {}".format(e))
 
     def scrap(self):
         try:
@@ -39,8 +43,11 @@ class CoinMarketCap:
             data = dict(list(self.coins.items())
                         [0:int(self.coins_count)])
             return data
-        except Exception as ex:
+        except Exception as e:
             self.__close_driver()
+            log = Logger()
+            log.error(
+                "Error in scrap method : {}".format(e))
 
 
 def run(filename: str = "", directory: str = os.getcwd()+'/data'):
