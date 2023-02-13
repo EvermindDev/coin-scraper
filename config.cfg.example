@@ -1,0 +1,15 @@
+[coinbasecap]
+coin_limit = 5
+start_page_no = 1
+
+[scrap]
+# headless: False, True
+headless = False
+retry_limit = 3
+
+[data]
+data_file_name = coins
+data_file_format = csv
+
+[logs]
+log_file_name = main

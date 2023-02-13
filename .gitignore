@@ -1,7 +1,10 @@
 # IDEA
 .idea
 
-# DATA
+# Config
+/config.cfg
+
+# Data
 data/*
 !data/.gitkeep
 logs/*
