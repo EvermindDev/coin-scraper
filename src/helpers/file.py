@@ -1,6 +1,8 @@
 import os
 import csv
 from src.helpers.logger import Logger
+import urllib.request
+from src.helpers.logger import Logger
 
 
 class File:
@@ -9,7 +11,7 @@ class File:
     def write_csv(filename, data, directory):
         log = Logger()
         os.chdir(directory)
-        fieldnames = ['name', 'symbol', 'rank', 'watchlist', 'logo']
+        fieldnames = ['name', 'symbol', 'rank', 'watchlist', 'logo', 'entry_datetime']
         mode = 'w'
         if os.path.exists("{}.csv".format(filename)):
             mode = 'a'
@@ -23,8 +25,19 @@ class File:
                     "symbol": data[key]['symbol'],
                     "rank": data[key]['rank'],
                     "watchlist": data[key]['watchlist'],
-                    "logo": data[key]['logo']
+                    "logo": data[key]['logo'],
+                    "entry_datetime": data[key]['entry_datetime']
                 }
                 writer.writerow(row)
             data_file.close()
         log.info('Data successfully saved in file {}.csv'.format(filename))
+
+    @staticmethod
+    def download_image(filename, src, directory):
+        try:
+            image_path = os.path.abspath(os.path.join(os.getcwd(), directory, filename))
+            urllib.request.urlretrieve(src, image_path)
+        except Exception as e:
+            log = Logger()
+            log.error(
+                "An error occurred while downloading the image : {}".format(e))

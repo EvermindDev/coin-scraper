@@ -20,6 +20,7 @@ class Config:
 
         self.DATA_FILE_NAME = config.get(DATA_CONFIG_SECTION, "data_file_name")
         self.DATA_FILE_FORMAT = config.get(DATA_CONFIG_SECTION, "data_file_format")
+        self.DATA_DOWNLOAD_LOGO = eval(config.get(DATA_CONFIG_SECTION, "download_logo"))
 
         self.LOG_FILE_NAME = config.get(LOGS_CONFIG_SECTION, "log_file_name")
 

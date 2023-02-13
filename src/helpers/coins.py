@@ -1,6 +1,7 @@
 from selenium.webdriver.common.by import By
 import re
 from src.helpers.logger import Logger
+from src.helpers.file import File
 
 
 class Coin:
@@ -28,7 +29,7 @@ class Coin:
             return []
 
     @staticmethod
-    def coin_data(driver):
+    def coin_data(driver, entry_datetime, download_image):
         try:
             name = driver.find_element(By.XPATH, '//h2/span/span').text
             symbol = driver.find_element(By.XPATH, '//h2/small[@class="nameSymbol"]').text
@@ -47,15 +48,22 @@ class Coin:
                 if watchlist_match:
                     watchlist_count = int(re.sub(",", "", watchlist_match.group(1)))
 
-            logo = driver.find_element(By.XPATH, '//div[contains(@class, "nameHeader")]/img')
-            logo_img_url = logo.get_attribute('src')
+            logo_file_name = ''
+
+            if download_image:
+                logo = driver.find_element(By.XPATH, '//div[contains(@class, "nameHeader")]/img')
+                logo_img_url = logo.get_attribute('src')
+                file = File()
+                logo_file_name = symbol.lower() + '.png'
+                file.download_image(logo_file_name, logo_img_url, 'data/logo')
 
             return {
                 "name": name,
                 "symbol": symbol,
                 "rank": rank_number,
                 "watchlist": watchlist_count,
-                "logo": logo_img_url
+                "logo": logo_file_name,
+                'entry_datetime': entry_datetime
             }
 
         except Exception as e:

@@ -5,11 +5,15 @@ start_page_no = 1
 [scrap]
 # headless: False, True
 headless = False
+
 retry_limit = 3
 
 [data]
 data_file_name = coins
 data_file_format = csv
+
+# Download coin logo: False, True
+download_logo = True
 
 [logs]
 log_file_name = main
