@@ -15,9 +15,14 @@
 4. Install dependencies<br/>
     - `pip install -r requirements.txt`<br/><br/>
 
-5. Install Chrome Web Driver
-    - Get the latest Chrome web driver from https://sites.google.com/chromium.org/driver/downloads
-    - Extract and move the binary to bin: 
-      - For Linux `unzip chromedriver_linux64.zip -d .venv/bin/`
-      - For Windows extract `chromedriver_win32.zip` to `.venv/bin/`
-    - Make it executable `chmod +x .venv/bin/chromedriver`<br/><br/>
+5. Configuration. Copy config.cfg.example to config.cfg
+   - `cp config.cfg.example config.cfg`
+
+## Usage
+   - Run `app.py` file from IDE <br/>
+   or from command line <br/>
+   - `python -m app`
+
+## Deactivation
+   Deactivate the virtual environment
+      - `source .venv/bin/deactivate`
