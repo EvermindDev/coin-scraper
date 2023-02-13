@@ -1,6 +1,7 @@
 from src.helpers.driver_initializer import DriverInitializer
 from src.helpers.coins import Coin
-
+from src.helpers.file import File
+import os
 
 class CoinMarketCap:
 
@@ -35,13 +36,17 @@ class CoinMarketCap:
             self.__driver.get(self.URL)
             self.__fetch_data()
             self.__close_driver()
-            return None
+            data = dict(list(self.coins.items())
+                        [0:int(self.coins_count)])
+            return data
         except Exception as ex:
             self.__close_driver()
 
 
-def run():
-    CoinMarketCap(2, False).scrap()
+def run(filename: str = "", directory: str = os.getcwd()+'/data'):
+    data = CoinMarketCap(2, False).scrap()
+    filename = "coins"
+    File.write_csv(filename=filename, data=data, directory=directory)
 
 
 if __name__ == '__main__':
