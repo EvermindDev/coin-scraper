@@ -8,7 +8,17 @@ headless = False
 
 retry_limit = 3
 
-[data]
+[db-data]
+# Use database to store data: False, True
+use_database = False
+host = <host>
+user = <user>
+password = <password>
+database = <database>
+
+[file-data]
+# Use file to store data: False, True
+use_file = True
 data_file_name = coins
 data_file_format = csv
 

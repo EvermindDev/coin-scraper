@@ -3,7 +3,8 @@ import configparser
 CONFIG_FILE_NAME = "config.cfg"
 COINBASECAP_CONFIG_SECTION = "coinbasecap"
 SCRAP_CONFIG_SECTION = "scrap"
-DATA_CONFIG_SECTION = "data"
+DB_CONFIG_SECTION = "db-data"
+DATA_CONFIG_SECTION = "file-data"
 LOGS_CONFIG_SECTION = "logs"
 
 
@@ -18,6 +19,13 @@ class Config:
         self.HEADLESS = eval(config.get(SCRAP_CONFIG_SECTION, "headless"))
         self.RETRY_LIMIT = int(config.get(SCRAP_CONFIG_SECTION, "retry_limit"))
 
+        self.DATA_DB_USE = eval(config.get(DB_CONFIG_SECTION, "use_database"))
+        self.DATA_DB_HOST = config.get(DB_CONFIG_SECTION, "host")
+        self.DATA_DB_USER = config.get(DB_CONFIG_SECTION, "user")
+        self.DATA_DB_PASSWORD = config.get(DB_CONFIG_SECTION, "password")
+        self.DATA_DB_DATABASE = config.get(DB_CONFIG_SECTION, "database")
+
+        self.DATA_FILE_USE = eval(config.get(DATA_CONFIG_SECTION, "use_file"))
         self.DATA_FILE_NAME = config.get(DATA_CONFIG_SECTION, "data_file_name")
         self.DATA_FILE_FORMAT = config.get(DATA_CONFIG_SECTION, "data_file_format")
         self.DATA_DOWNLOAD_LOGO = eval(config.get(DATA_CONFIG_SECTION, "download_logo"))

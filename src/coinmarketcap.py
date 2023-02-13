@@ -7,7 +7,8 @@ from src.helpers.driver_initializer import DriverInitializer
 from src.helpers.file import File
 from src.helpers.logger import Logger
 from src.helpers.coins import Coin
-
+from src.helpers.db import MysqlDb
+from src.helpers.helper import Helper
 
 class CoinMarketCap:
 
@@ -37,15 +38,29 @@ class CoinMarketCap:
         finally:
             self.driver.close()
             self.driver.quit()
-
         data = dict(list(self.coins.items())[0:int(self.config.COIN_LIMIT)])
         return data
 
 
 def run(directory: str = os.getcwd() + '/data'):
     config = Config()
-    data = CoinMarketCap(config).scrap()
-    File.write_csv(filename=config.DATA_FILE_NAME, data=data, directory=directory)
+    entries = CoinMarketCap(config).scrap()
+
+    if config.DATA_FILE_USE:
+        File.write_csv(filename=config.DATA_FILE_NAME, data=entries, directory=directory)
+
+    if config.DATA_DB_USE:
+        helper = Helper()
+        db = MysqlDb(
+            host=config.DATA_DB_HOST,
+            user=config.DATA_DB_USER,
+            password=config.DATA_DB_PASSWORD,
+            database=config.DATA_DB_DATABASE
+        )
+        db.connect()
+        db.create_table_if_not_exists()
+        db.insert_data(helper.tuple_list(entries))
+        db.close_connection()
 
 
 if __name__ == '__main__':
