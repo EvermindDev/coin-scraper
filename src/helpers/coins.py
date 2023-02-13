@@ -30,12 +30,32 @@ class Coin:
     @staticmethod
     def coin_data(driver):
         try:
-            name = driver.find_element(By.XPATH, '//h2/span/span')
-            symbol = driver.find_element(By.XPATH, '//h2/small[@class="nameSymbol"]')
+            name = driver.find_element(By.XPATH, '//h2/span/span').text
+            symbol = driver.find_element(By.XPATH, '//h2/small[@class="nameSymbol"]').text
+
+            rank_data = driver.find_element(By.XPATH, '//div[@class="namePill namePillPrimary"]').text
+            rank_match = re.search(r"#\d+", rank_data)
+            if rank_match:
+                rank_number = int(re.sub(r"#", "", rank_match.group()))
+            else:
+                rank_number = ''
+
+            watchlist_data = driver.find_element(By.XPATH, '//div[contains(text(), "watchlists")]').text
+            watchlist_count = ''
+            if watchlist_data:
+                watchlist_match = re.search(r"^On\s*(\d{1,3}(?:,\d{3})*)\s*watchlists$", watchlist_data)
+                if watchlist_match:
+                    watchlist_count = int(re.sub(",", "", watchlist_match.group(1)))
+
+            logo = driver.find_element(By.XPATH, '//div[contains(@class, "nameHeader")]/img')
+            logo_img_url = logo.get_attribute('src')
 
             return {
-                "name": name.text,
-                "symbol": symbol.text
+                "name": name,
+                "symbol": symbol,
+                "rank": rank_number,
+                "watchlist": watchlist_count,
+                "logo": logo_img_url
             }
 
         except Exception as e:

@@ -9,7 +9,7 @@ class File:
     def write_csv(filename, data, directory):
         log = Logger()
         os.chdir(directory)
-        fieldnames = ['name', 'symbol']
+        fieldnames = ['name', 'symbol', 'rank', 'watchlist', 'logo']
         mode = 'w'
         if os.path.exists("{}.csv".format(filename)):
             mode = 'a'
@@ -20,7 +20,10 @@ class File:
             for key in data:
                 row = {
                     "name": data[key]['name'],
-                    "symbol": data[key]['symbol']
+                    "symbol": data[key]['symbol'],
+                    "rank": data[key]['rank'],
+                    "watchlist": data[key]['watchlist'],
+                    "logo": data[key]['logo']
                 }
                 writer.writerow(row)
             data_file.close()
