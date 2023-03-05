@@ -2,7 +2,7 @@ import configparser
 
 CONFIG_FILE_NAME = "config.cfg"
 COINBASECAP_CONFIG_SECTION = "coinbasecap"
-SCRAP_CONFIG_SECTION = "scrap"
+SCRAPE_CONFIG_SECTION = "scrape"
 DB_CONFIG_SECTION = "db-data"
 DATA_CONFIG_SECTION = "file-data"
 LOGS_CONFIG_SECTION = "logs"
@@ -16,8 +16,8 @@ class Config:
         self.COIN_LIMIT = int(config.get(COINBASECAP_CONFIG_SECTION, "coin_limit"))
         self.START_PAGE_NO = int(config.get(COINBASECAP_CONFIG_SECTION, "start_page_no"))
 
-        self.HEADLESS = eval(config.get(SCRAP_CONFIG_SECTION, "headless"))
-        self.RETRY_LIMIT = int(config.get(SCRAP_CONFIG_SECTION, "retry_limit"))
+        self.HEADLESS = eval(config.get(SCRAPE_CONFIG_SECTION, "headless"))
+        self.RETRY_LIMIT = int(config.get(SCRAPE_CONFIG_SECTION, "retry_limit"))
 
         self.DATA_DB_USE = eval(config.get(DB_CONFIG_SECTION, "use_database"))
         self.DATA_DB_HOST = config.get(DB_CONFIG_SECTION, "host")

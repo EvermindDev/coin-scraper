@@ -10,6 +10,7 @@ from src.helpers.coins import Coin
 from src.helpers.db import MysqlDb
 from src.helpers.helper import Helper
 
+
 class CoinMarketCap:
 
     def __init__(self, config):
@@ -29,12 +30,12 @@ class CoinMarketCap:
         except Exception as e:
             Logger().error("Error in fetch_data method : {}".format(e))
 
-    def scrap(self):
+    def scrape(self):
         try:
             self.driver.get(self.URL)
             self.fetch_data()
         except Exception as e:
-            Logger().error("Error in scrap method : {}".format(e))
+            Logger().error("Error in scrape method : {}".format(e))
         finally:
             self.driver.close()
             self.driver.quit()
@@ -44,7 +45,7 @@ class CoinMarketCap:
 
 def run(directory: str = os.getcwd() + '/data'):
     config = Config()
-    entries = CoinMarketCap(config).scrap()
+    entries = CoinMarketCap(config).scrape()
 
     if config.DATA_FILE_USE:
         File.write_csv(filename=config.DATA_FILE_NAME, data=entries, directory=directory)

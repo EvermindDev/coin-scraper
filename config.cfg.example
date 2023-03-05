@@ -2,7 +2,7 @@
 coin_limit = 5
 start_page_no = 1
 
-[scrap]
+[scrape]
 # headless: False, True
 headless = False
 
