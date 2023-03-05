@@ -26,7 +26,7 @@ class CoinMarketCap:
             for index, url in enumerate(elements, start=1):
                 self.driver.get(url)
                 self.coins[index] = Coin.coin_data(self.driver, self.entry_datetime, self.config.DATA_DOWNLOAD_LOGO)
-                time.sleep(1)
+                time.sleep(self.config.TIME_SLEEP)
         except Exception as e:
             Logger().error("Error in fetch_data method : {}".format(e))
 

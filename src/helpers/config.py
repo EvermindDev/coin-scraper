@@ -17,6 +17,7 @@ class Config:
         self.START_PAGE_NO = int(config.get(COINBASECAP_CONFIG_SECTION, "start_page_no"))
 
         self.HEADLESS = eval(config.get(SCRAPE_CONFIG_SECTION, "headless"))
+        self.TIME_SLEEP = eval(config.get(SCRAPE_CONFIG_SECTION, "time_sleep"))
         self.RETRY_LIMIT = int(config.get(SCRAPE_CONFIG_SECTION, "retry_limit"))
 
         self.DATA_DB_USE = eval(config.get(DB_CONFIG_SECTION, "use_database"))
