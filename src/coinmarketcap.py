@@ -9,6 +9,7 @@ from src.helpers.logger import Logger
 from src.helpers.coins import Coin
 from src.helpers.db import MysqlDb
 from src.helpers.helper import Helper
+from src.helpers.cleaner import Cleaner
 
 
 class CoinMarketCap:
@@ -45,18 +46,7 @@ class CoinMarketCap:
 
 def run():
     config = Config()
-    for filename in os.listdir(config.DATA_DIRECTORY + '/historical'):
-        # Check if the file is not .gitkeep
-        if filename != '.gitkeep':
-            # If it's not .gitkeep, delete the file
-            os.remove(os.path.join(config.DATA_DIRECTORY + '/historical', filename))
-
-    for filename in os.listdir(config.DATA_DIRECTORY + '/logo'):
-        # Check if the file is not .gitkeep
-        if filename != '.gitkeep':
-            # If it's not .gitkeep, delete the file
-            os.remove(os.path.join(config.DATA_DIRECTORY + '/logo', filename))
-
+    Cleaner.data_cleanup(config)
     entries = CoinMarketCap(config).scrape()
 
     if config.DATA_FILE_USE:
