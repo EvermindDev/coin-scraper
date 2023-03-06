@@ -2,6 +2,7 @@ import configparser
 import os
 
 CONFIG_FILE_NAME = "config.cfg"
+ANALYZER_CONFIG_SECTION = "analyzer"
 COINBASECAP_CONFIG_SECTION = "coinbasecap"
 HISTORICAL_DATA_CONFIG_SECTION = "historical-data"
 SCRAPE_CONFIG_SECTION = "scrape"
@@ -21,8 +22,12 @@ class Config:
         else:
             data_directory_path = os.getcwd() + '/data'
 
+        self.ANALYZER_MODE = eval(config.get(ANALYZER_CONFIG_SECTION, "mode"))
+
         self.COIN_LIMIT = int(config.get(COINBASECAP_CONFIG_SECTION, "coin_limit"))
         self.START_PAGE_NO = int(config.get(COINBASECAP_CONFIG_SECTION, "start_page_no"))
+        self.CURRENCY = eval(config.get(COINBASECAP_CONFIG_SECTION, "currency"))
+        self.CURRENCY_SYMBOL = eval(config.get(COINBASECAP_CONFIG_SECTION, "currency_symbol"))
 
         self.ENABLE_HISTORICAL_DATA = eval(config.get(HISTORICAL_DATA_CONFIG_SECTION, "enable_historical_data"))
         self.HISTORICAL_TIME_RANGE = eval(config.get(HISTORICAL_DATA_CONFIG_SECTION, "historical_time_range"))

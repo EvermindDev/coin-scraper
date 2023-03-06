@@ -1,6 +1,13 @@
+[analyzer]
+# Analyzing Historical Data
+# Modes: disabled, scrape-analyze, analyze
+mode = 'scrape-analyze'
+
 [coinbasecap]
 coin_limit = 5
 start_page_no = 1
+currency = 'USD'
+currency_symbol = '$'
 
 [historical-data]
 # Scrape coin historical data: False, True

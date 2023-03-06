@@ -1,6 +1,7 @@
 import time
 import datetime
 
+from src.helpers.analyzer import Analyzer
 from src.helpers.config import Config
 from src.helpers.driver_initializer import DriverInitializer
 from src.helpers.file import File
@@ -44,15 +45,21 @@ class CoinMarketCap:
 
 def run():
     config = Config()
-    Cleaner.data_cleanup(config)
-    entries = CoinMarketCap(config).scrape()
 
-    if config.DATA_FILE_USE:
-        File.write_csv(filename=config.DATA_FILE_NAME, data=entries, directory=config.DATA_DIRECTORY)
+    if config.ANALYZER_MODE in ['disabled', 'scrape-analyze']:
+        Cleaner.data_cleanup(config)
+        entries = CoinMarketCap(config).scrape()
 
-    if config.DATA_DB_USE:
-        db = MysqlDb(config)
-        db.save_data(entries)
+        if config.DATA_FILE_USE:
+            File.write_csv(filename=config.DATA_FILE_NAME, data=entries, directory=config.DATA_DIRECTORY)
+
+        if config.DATA_DB_USE:
+            db = MysqlDb(config)
+            db.save_data(entries)
+
+    if config.ANALYZER_MODE in ['analyze', 'scrape-analyze']:
+        analyzer = Analyzer(config)
+        analyzer.execute()
 
 
 if __name__ == '__main__':
