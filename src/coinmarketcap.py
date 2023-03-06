@@ -25,7 +25,7 @@ class CoinMarketCap:
             elements = Coin.element_list(self.driver, self.config.COIN_LIMIT)
             for index, url in enumerate(elements, start=1):
                 self.driver.get(url)
-                self.coins[index] = Coin.coin_data(self.driver, self.entry_datetime, self.config.DATA_DOWNLOAD_LOGO)
+                self.coins[index] = Coin.coin_data(self.driver, self.entry_datetime, self.config)
                 time.sleep(self.config.TIME_SLEEP)
         except Exception as e:
             Logger().error("Error in fetch_data method : {}".format(e))
@@ -43,12 +43,24 @@ class CoinMarketCap:
         return data
 
 
-def run(directory: str = os.getcwd() + '/data'):
+def run():
     config = Config()
+    for filename in os.listdir(config.DATA_DIRECTORY + '/historical'):
+        # Check if the file is not .gitkeep
+        if filename != '.gitkeep':
+            # If it's not .gitkeep, delete the file
+            os.remove(os.path.join(config.DATA_DIRECTORY + '/historical', filename))
+
+    for filename in os.listdir(config.DATA_DIRECTORY + '/logo'):
+        # Check if the file is not .gitkeep
+        if filename != '.gitkeep':
+            # If it's not .gitkeep, delete the file
+            os.remove(os.path.join(config.DATA_DIRECTORY + '/logo', filename))
+
     entries = CoinMarketCap(config).scrape()
 
     if config.DATA_FILE_USE:
-        File.write_csv(filename=config.DATA_FILE_NAME, data=entries, directory=directory)
+        File.write_csv(filename=config.DATA_FILE_NAME, data=entries, directory=config.DATA_DIRECTORY)
 
     if config.DATA_DB_USE:
         helper = Helper()

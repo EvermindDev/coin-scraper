@@ -2,6 +2,13 @@
 coin_limit = 5
 start_page_no = 1
 
+[historical-data]
+# Scrape coin historical data: False, True
+enable_historical_data = True
+
+# Historical data time range in days.
+historical_time_range = 7
+
 [scrape]
 # headless: False, True
 headless = False
@@ -24,6 +31,7 @@ database = <database>
 use_file = True
 data_file_name = coins
 data_file_format = csv
+data_directory = 'data'
 
 # Download coin logo: False, True
 download_logo = True

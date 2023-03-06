@@ -1,6 +1,5 @@
 import os
 import csv
-from src.helpers.logger import Logger
 import urllib.request
 from src.helpers.logger import Logger
 
@@ -28,6 +27,7 @@ class File:
                     "logo": data[key]['logo'],
                     "entry_datetime": data[key]['entry_datetime']
                 }
+
                 writer.writerow(row)
             data_file.close()
         log.info('Data successfully saved in file {}.csv'.format(filename))
@@ -41,3 +41,21 @@ class File:
             log = Logger()
             log.error(
                 "An error occurred while downloading the image : {}".format(e))
+
+    @staticmethod
+    def write_historical_csv(filename, data, directory):
+        log = Logger()
+        historical_directory_path = os.path.join(directory + '/historical')
+        fieldnames = ['date', 'open', 'high', 'low', 'close', 'volume', 'market_cap']
+        mode = 'w'
+        if os.path.exists("{}/{}.csv".format(historical_directory_path, filename)):
+            mode = 'a'
+        with open("{}/{}.csv".format(historical_directory_path, filename), mode, newline='', encoding="utf-8") \
+                as data_file:
+            writer = csv.DictWriter(data_file, fieldnames=fieldnames)
+            if mode == 'w':
+                writer.writeheader()
+            for row in data:
+                writer.writerow(row)
+            data_file.close()
+        log.info('Data successfully saved in file {}.csv'.format(filename))

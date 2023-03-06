@@ -9,6 +9,8 @@ data/*
 !data/.gitkeep
 data/logo/*
 !data/logo/.gitkeep
+data/historical/*
+!data/historical/.gitkeep
 logs/*
 !logs/.gitkeep
 
