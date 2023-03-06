@@ -1,4 +1,3 @@
-import os
 import time
 import datetime
 
@@ -8,7 +7,6 @@ from src.helpers.file import File
 from src.helpers.logger import Logger
 from src.helpers.coins import Coin
 from src.helpers.db import MysqlDb
-from src.helpers.helper import Helper
 from src.helpers.cleaner import Cleaner
 
 
@@ -53,17 +51,8 @@ def run():
         File.write_csv(filename=config.DATA_FILE_NAME, data=entries, directory=config.DATA_DIRECTORY)
 
     if config.DATA_DB_USE:
-        helper = Helper()
-        db = MysqlDb(
-            host=config.DATA_DB_HOST,
-            user=config.DATA_DB_USER,
-            password=config.DATA_DB_PASSWORD,
-            database=config.DATA_DB_DATABASE
-        )
-        db.connect()
-        db.create_table_if_not_exists()
-        db.insert_data(helper.tuple_list(entries))
-        db.close_connection()
+        db = MysqlDb(config)
+        db.save_data(entries)
 
 
 if __name__ == '__main__':
