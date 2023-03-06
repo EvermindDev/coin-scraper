@@ -27,5 +27,5 @@ class Helper:
 
     @staticmethod
     def normalize_price(value):
-        value.replace('$', '').replace(',', '')
-        return value
+        data = value.replace('$', '').replace(',', '')
+        return data
