@@ -11,6 +11,8 @@ class DriverInitializer:
     def set_properties(self, options):
         if self.headless:
             options.add_argument("--headless")
+        else:
+            options.add_argument("--start-maximized")
 
         return options
 
